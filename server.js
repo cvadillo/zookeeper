@@ -1,6 +1,10 @@
 const { animals } = require('./data/animals');
 const express = require('express');
 const app = express();
+// parese incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
 const PORT = process.env.PORT || 3001;
 
 function filterByQuery(query, animalsArray) {
@@ -51,6 +55,14 @@ function findById(id, animalsArray) {
 	return result;
 };
 
+function createNewAnimal(body, animalsArray) {
+	console.log(body);
+	// our functions main code will go here
+
+	// return finished code to post route for response
+	return body;
+};
+
 app.get('/api/animals', (req, res) => {
 	let results = animals;
 	if(req.query) {
@@ -66,6 +78,12 @@ app.get('/api/animals/:id', (req, res) => {
 	} else {
 		res.send(404);
 	}
+});
+
+app.post('/api/animals', (req, res) => {
+	// req.body is where our incoming content will be
+	console.log(req.body);
+	res.json(req.body);
 });
 
 app.listen(PORT, () => {
