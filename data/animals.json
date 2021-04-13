@@ -117,6 +117,13 @@
         "hungry"
       ],
       "id": "11"
+    },
+    {
+      "name": "Jeremy Clarkson",
+      "species": "Orangutan",
+      "diet": "carnivore",
+      "personalityTraits": [],
+      "id": "12"
     }
   ]
 }

@@ -1,13 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-
 const { animals } = require('./data/animals');
 const express = require('express');
 const app = express();
+
 // parese incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// serve static files through the express server
+app.use(express.static('public'));
+
 const PORT = process.env.PORT || 3001;
 
 function filterByQuery(query, animalsArray) {
@@ -102,6 +105,24 @@ app.get('/api/animals/:id', (req, res) => {
 	}
 });
 
+// HTML PATHS
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/animals', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+// POST to animals.json
 app.post('/api/animals', (req, res) => {
 	// set id based on what the next index of the array will be
 	req.body.id = animals.length.toString();
